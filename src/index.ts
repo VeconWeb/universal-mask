@@ -1,10 +1,10 @@
-class Formatter {
+
     /**
      * Aplica uma máscara ao CPF fornecido, transformando-o no formato XXX.XXX.XXX-XX.
      * @param cpf - O CPF a ser mascarado, deve conter exatamente 11 dígitos numéricos.
      * @returns O CPF formatado ou lança um erro se o CPF for inválido.
      */
-    static maskCPF(cpf: string) {
+    function maskCPF(cpf: string) {
       if (cpf.length > 11) {
         throw new Error("CPF inválido. Deve conter 11 dígitos numéricos.");
       }
@@ -26,7 +26,7 @@ class Formatter {
      * @param cnpj - O CNPJ a ser mascarado, deve conter exatamente 14 dígitos numéricos.
      * @returns O CNPJ formatado ou lança um erro se o CNPJ for inválido.
      */
-    static maskCNPJ(cnpj: string) {
+    function maskCNPJ(cnpj: string) {
       if (cnpj.length > 14) {
         throw new Error("CNPJ inválido. Deve conter 14 dígitos numéricos.");
       }
@@ -54,13 +54,13 @@ class Formatter {
      * @returns {string} O CNPJ ou Cpf formatado no formato XXX.XXX.XXX-XX ou XX.XXX.XXX/XXXX-XX.
      * @throws {Error} Lança um erro se o CNPJ ou Cpf fornecido for maior 14 dígitos numéricos.
      */
-    static formatDocumento(numero: string) {
+    function formatDocumento(numero: string) {
       const cleanNumero = numero.replace(/\D/g, '');
     
       if (cleanNumero.length === 11) {
-        return this.maskCPF(cleanNumero);
+        return maskCPF(cleanNumero);
       } else if (cleanNumero.length === 14) {
-        return this.maskCNPJ(cleanNumero);
+        return maskCNPJ(cleanNumero);
       } else {
         throw new Error("Número inválido. Deve conter 11 ou 14 dígitos numéricos.");
       }
@@ -76,7 +76,7 @@ class Formatter {
  * @param {string} value - O valor a ser mascarado.
  * @returns {string} - O valor mascarado de acordo com a máscara.
  */
-    static applyMask(mask: Record<string, string> | string, value: string): string {
+    function applyMask(mask: Record<string, string> | string, value: string): string {
       value = value.replace(/\D/g, '');
   
       let maskedValue = '';
@@ -110,4 +110,6 @@ class Formatter {
       }
       return maskedValue;
     }  
-}
+
+
+

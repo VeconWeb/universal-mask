@@ -1,6 +1,6 @@
 {
   "name": "universal-mask",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Pacotes de formatacao",
   "main": "index.js",
   "repository": {
@@ -10,7 +10,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["Brasil", "Mask"],
+  "keywords": [
+    "Brasil",
+    "Mask"
+  ],
   "author": "“veconweb” <“lu4nart@gmail.com”>",
-  "license": "“MIT”"
+  "license": "“MIT”",
+  "dependencies": {
+    "universal-mask": "^0.0.2"
+  }
 }
