@@ -65,42 +65,49 @@ class Formatter {
         throw new Error("Número inválido. Deve conter 11 ou 14 dígitos numéricos.");
       }
     }
+    
     /**
-     * Aplica uma máscara a um valor, removendo caracteres não numéricos
-     * e combinando-o com a máscara fornecida.
-     *
-     * @param {string} mask - A máscara a ser aplicada (usando 'x' para representar dígitos).
-     * @param {string} value - O valor a ser mascarado.
-     * @returns {string} - O valor mascarado de acordo com a máscara.
-     */
-    static applyMask(mask: any, value: string) {
-      value = value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
-
+ * Aplica uma máscara a um valor, removendo caracteres não numéricos
+ * e combinando-o com a máscara fornecida. A máscara pode ser fornecida como uma string
+ * ou um objeto que mapeia o comprimento do valor para a máscara correspondente.
+ * ex de `mask` obj :
+ * {"11" : "xxx.xxx.xxx-xx", "14" : "xxx.xxx.xxx/xxxx-xx"}
+ * @param {string | Record<string, string>} mask - A máscara a ser aplicada (usando 'x' para representar dígitos) ou um objeto de mapeamento.
+ * @param {string} value - O valor a ser mascarado.
+ * @returns {string} - O valor mascarado de acordo com a máscara.
+ */
+    static applyMask(mask: Record<string, string> | string, value: string): string {
+      value = value.replace(/\D/g, '');
+  
       let maskedValue = '';
       let valueIndex = 0;
-    
-      for (let i = 0; i < mask.length; i++) {
-        if (valueIndex >= value.length) {
-          // Se o valor acabar, pare de adicionar caracteres à máscara
+
+      let maskMap: any;
+      maskMap = mask; 
+        
+      for (const length in maskMap) {
+        if (parseInt(length) >= value.length) {
+          mask = maskMap[length];
           break;
         }
-    
-        if (mask[i] === 'x') {
-          // Substitua 'x' pelo próximo dígito do valor
-          maskedValue += value[valueIndex];
-          valueIndex++;
-        } else {
-          // Mantenha o caractere da máscara
-          maskedValue += mask[i];
+      }
+  
+      if (typeof mask === "string") {
+        for (let i = 0; i < mask.length; i++) {
+          if (valueIndex >= value.length) {
+            break;
+          }
+  
+          if (mask[i] === 'x') {
+            maskedValue += value[valueIndex];
+            valueIndex++;
+          } else {
+            maskedValue += mask[i];
+          }
         }
+      } else {
+        maskedValue = value;
       }
       return maskedValue;
-    }    
+    }  
 }
-
-console.log(Formatter.applyMask("xxx.xxx.xxx-xx", "16199967666")); // Resultado: "161.999.676-66"
-console.log(Formatter.applyMask("xxx.xxx.xxx*xx", "1619999990")); // Resultado: "161.99"
-console.log(Formatter.applyMask("xxx.xxx.xxx*xx", "161995555555555")); // Resultado: "161.99"
-
-console.log(Formatter.applyMask({"11" : "xxx.xxx.xxx-xx", "14" : "xxx.xxx.xxx/xxxx-xx"}, "82986292000148")); // Resultado: "82.986.292/0001-48"
-console.log(Formatter.applyMask({"11" : "xxx.xxx.xxx-xx", "14" : "xxx.xxx.xxx/xxxx-xx"}, "53879580073")); // Resultado: "538.795.800-73"
