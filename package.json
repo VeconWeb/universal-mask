@@ -1,0 +1,16 @@
+{
+  "name": "universal-mask",
+  "version": "0.0.1",
+  "description": "Pacotes de formatacao",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VeconWeb/universal-mask.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["Brasil", "Mask"],
+  "author": "“veconweb” <“lu4nart@gmail.com”>",
+  "license": "“MIT”"
+}
