@@ -21,8 +21,9 @@ function maskCPF(cpf) {
     else if (cpf.length <= 11) {
         cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{0,2})/, '$1.$2.$3-$4');
     }
-    return cpf;
+    return String(cpf);
 }
+
 /**
  * Aplica uma máscara ao CNPJ fornecido, transformando-o no formato XX.XXX.XXX/XXXX-XX.
  * @param cnpj - O CNPJ a ser mascarado, deve conter exatamente 14 dígitos numéricos.
@@ -48,8 +49,9 @@ function maskCNPJ(cnpj) {
     else {
         cnpj = cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{0,2})/, '$1.$2.$3/$4-$5');
     }
-    return cnpj;
+    return String(cnpj);
 }
+
 /**
  * Aplica uma máscara ao CNPJ ou Cpf fornecido, transformando-o no formato XX.XXX.XXX/XXXX-XX.
  *
@@ -60,15 +62,16 @@ function maskCNPJ(cnpj) {
 function formatDocumento(numero) {
     const cleanNumero = numero.replace(/\D/g, '');
     if (cleanNumero.length === 11) {
-        return maskCPF(cleanNumero);
+        return String(maskCPF(cleanNumero));
     }
     else if (cleanNumero.length === 14) {
-        return maskCNPJ(cleanNumero);
+        return String((cleanNumero));
     }
     else {
         throw new Error("Número inválido. Deve conter 11 ou 14 dígitos numéricos.");
     }
 }
+
 /**
 * Aplica uma máscara a um valor, removendo caracteres não numéricos
 * e combinando-o com a máscara fornecida. A máscara pode ser fornecida como uma string
@@ -108,5 +111,5 @@ function applyMask(mask, value) {
     else {
         maskedValue = value;
     }
-    return maskedValue;
+    return String(maskedValue) ;
 }
