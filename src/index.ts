@@ -111,5 +111,10 @@
       return maskedValue;
     }  
 
-
-
+    module.exports = {
+      applyMask,
+      formatDocumento,
+      maskCPF,
+      maskCNPJ
+    };
+    

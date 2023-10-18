@@ -1,6 +1,6 @@
 {
   "name": "universal-mask",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Pacotes de formatacao",
   "main": "index.js",
   "repository": {
@@ -15,5 +15,8 @@
     "Mask"
   ],
   "author": "“veconweb” <“lu4nart@gmail.com”>",
-  "license": "“MIT”"
+  "license": "“MIT”",
+  "devDependencies": {
+    "@types/node": "^20.8.7"
+  }
 }
