@@ -1,21 +1,21 @@
 # universal-mask
 
-Este é um pacote npm que fornece funções para aplicar máscaras a números de CPF e CNPJ, além de permitir a aplicação de máscaras a valores em geral. É útil para formatar dinamica.
+This is an npm package that provides functions to apply masks to CPF and CNPJ numbers, as well as allowing the application of masks to general values. It is useful for dynamic formatting.
 
-## Instalação
+## Installation
 
-Para instalar este pacote, você pode usar o npm. Abra o terminal e execute o seguinte comando:
+To install this package, you can use npm. Open your terminal and run the following command:
 
 ```bash
 npm i universal-mask
 ```
+```bash
+yarn add universal-mask
+```
 
-## Uso 
+## Usage
 
-Aqui está como você pode usar este pacote 
-
-código:
-
+Here's how you can use this package:
 
 ```javascript
 const {     
@@ -23,41 +23,49 @@ const {
     formatDocumento,
     maskCPF,
     maskCNPJ
-    } = require('universal-mask');
+    } = require('../universal-mask');
 
-// Aplicar máscara a um CPF
-const cpfMascarado = mascaras.maskCPF('12345678901');
-console.log(cpfMascarado); // Saída: '123.456.789-01'
+// First, you pass the mask in the object {number-of-characters: mask}, then the value as a string
+// Note that only numbers are allowed
+// Build your mask: X becomes the value, and special characters remain the same
+const maskedValueObj = applyMask({11:'xx.xxx.xxx-xx'}, '12345678901');
+console.log(maskedValueObj); // Output: '12.345.678-90'
 
-// Aplicar máscara a um CNPJ
-const cnpjMascarado = mascaras.maskCNPJ('12345678901234');
-console.log(cnpjMascarado); // Saída: '12.345.678/9012-34'
+// Apply a mask to a number based on size
+const maskedValue2ObjCPF = applyMask({11:'xx.xxx.xxx-xx', 14:'12.345.678/9012-34'}, '12345678901234');
+console.log(maskedValue2ObjCPF); // Output: '12.345.678/9012-34'
 
-// Aplicar máscara a um número com base no tamanho
-const valorMascarado = mascaras.applyMask('xx.xxx.xxx-xx', '12345678901');
-console.log(valorMascarado); // Saída: '12.345.678-90'
+const maskedValue2ObjCNPJ = applyMask({11:'xx.xxx.xxx-xx', 14:'12.345.678/9012-34'}, '12345678901234');
+console.log(maskedValue2ObjCNPJ); // Output: '12.345.678/9012-34'
+
+// Apply a mask to a CPF
+const cpfMasked = maskCPF('12345678901');
+console.log(cpfMasked); // Output: '123.456.789-01'
+
+// Apply a mask to a CNPJ
+const cnpjMasked = maskCNPJ('12345678901234');
+console.log(cnpjMasked); // Output: '12.345.678/9012-34'
+
+// Apply a mask to a CPF or CNPJ
+const formattedCPFMasked = formatDocumento('12345678901');
+console.log(formattedCPFMasked); // Output: '123.456.789-01'
+
+const formattedCNPJMasked = formatDocumento('12345678901234');
+console.log(formattedCNPJMasked); // Output: '12.345.678/9012-34'
 ```
-Você também pode usar a função formatDocumento para aplicar máscara a CPF ou CNPJ automaticamente, com base no tamanho do número:
 
-```javascript
+Please note that the package assumes that the input numbers consist of only numeric digits, and CPF numbers should have 11 digits, while CNPJ numbers should have 14 digits.
 
-const documentoFormatado = mascaras.formatDocumento('12345678901234');
-console.log(documentoFormatado); // Saída: '12.345.678/9012-34'
-```
+## Contribution
 
-Lembre-se de que o pacote assume que os números de entrada são compostos apenas por dígitos numéricos e que os números de CPF devem ter 11 dígitos, enquanto os números de CNPJ devem ter 14 dígitos.
+If you encounter issues or wish to contribute improvements, feel free to open an issue or send a pull request on the GitHub repository.
 
-Contribuição
+## License
 
-Se você encontrar problemas ou desejar contribuir com melhorias, fique à vontade para abrir uma issue ou enviar um pull request no repositório GitHub.
+This package is distributed under the MIT license. Please refer to the LICENSE file for more details.
 
-Licença
-
-Este pacote é distribuído sob a licença MIT. Consulte o arquivo LICENSE para obter mais detalhes.
-
-Autore
+Author
 - Luan @veconweb [X] https://github.com/VeconWeb/
 
-
-Agradecimentos:
-Agradecemos a todos os colaboradores que tornaram este pacote possível.
+Acknowledgments:
+We thank all the contributors who made this package possible.
