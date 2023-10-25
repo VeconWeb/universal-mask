@@ -1,6 +1,6 @@
 {
   "name": "universal-mask",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Mask",
   "main": "src/index.js",
   "repository": {
