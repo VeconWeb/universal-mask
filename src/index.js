@@ -5,23 +5,7 @@
  * @returns O CPF formatado ou lança um erro se o CPF for inválido.
  */
 function maskCPF(cpf) {
-    if (cpf.length > 11) {
-        throw new Error("CPF inválido. Deve conter 11 dígitos numéricos.");
-    }
-    cpf = cpf.replace(/\D/g, '');
-    if (cpf.length <= 3) {
-        cpf = cpf.replace(/(\d{0,3})/, '$1');
-    }
-    else if (cpf.length <= 6) {
-        cpf = cpf.replace(/(\d{3})(\d{0,3})/, '$1.$2');
-    }
-    else if (cpf.length <= 9) {
-        cpf = cpf.replace(/(\d{3})(\d{3})(\d{0,3})/, '$1.$2.$3');
-    }
-    else if (cpf.length <= 11) {
-        cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{0,2})/, '$1.$2.$3-$4');
-    }
-    return cpf;
+    return this.applyMask({11 : "xxx.xxx.xxx-xx"}, cpf);
 }
 
 /**
@@ -30,27 +14,9 @@ function maskCPF(cpf) {
  * @returns O CNPJ formatado ou lança um erro se o CNPJ for inválido.
  */
 function maskCNPJ(cnpj) {
-    if (cnpj.length > 14) {
-        throw new Error("CNPJ inválido. Deve conter 14 dígitos numéricos.");
-    }
-    cnpj = cnpj.replace(/\D/g, '');
-    if (cnpj.length <= 2) {
-        cnpj = cnpj.replace(/(\d{0,2})/, '$1');
-    }
-    else if (cnpj.length <= 5) {
-        cnpj = cnpj.replace(/(\d{2})(\d{0,3})/, '$1.$2');
-    }
-    else if (cnpj.length <= 8) {
-        cnpj = cnpj.replace(/(\d{2})(\d{3})(\d{0,3})/, '$1.$2.$3');
-    }
-    else if (cnpj.length <= 12) {
-        cnpj = cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{0,4})/, '$1.$2.$3/$4');
-    }
-    else {
-        cnpj = cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{0,2})/, '$1.$2.$3/$4-$5');
-    }
-    return cnpj;
+    return this.applyMask({14 : "xxx.xxx.xxx/xxxx-xx"}, cnpj);
 }
+
 /**
  * Aplica uma máscara ao CNPJ ou Cpf fornecido, transformando-o no formato XX.XXX.XXX/XXXX-XX.
  *
@@ -59,16 +25,7 @@ function maskCNPJ(cnpj) {
  * @throws {Error} Lança um erro se o CNPJ ou Cpf fornecido for maior 14 dígitos numéricos.
  */
 function formatDocumento(numero) {
-    const cleanNumero = numero.replace(/\D/g, '');
-    if (cleanNumero.length <= 11) {
-        return maskCPF(cleanNumero);
-    }
-    else if (cleanNumero.length >= 14) {
-        return maskCNPJ(cleanNumero);
-    }
-    else {
-        throw new Error("Número inválido. Deve conter 11 ou 14 dígitos numéricos.");
-    }
+    return this.applyMask({"11" : "xxx.xxx.xxx-xx", "14" : "xxx.xxx.xxx/xxxx-xx"}, numero);
 }
 
 /**
